@@ -39,10 +39,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
         className={`${spaceGrotesk.variable} ${notoSans.variable} antialiased`}
         style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
+        suppressHydrationWarning
       >
         <Providers>{children}</Providers>
       </body>
