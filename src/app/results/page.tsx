@@ -221,8 +221,8 @@ function ResultsContent() {
                 <span className="text-[var(--primary)] border-b-2 border-[var(--primary)] pb-1">
                   Results
                 </span>
-                <Link href="#" className="hover:text-[var(--primary)] transition-colors">
-                  How it Works
+                <Link href="/map" className="hover:text-[var(--primary)] transition-colors flex items-center gap-1">
+                  🗺️ Forensic Map
                 </Link>
                 <Link href="#" className="hover:text-[var(--primary)] transition-colors">
                   Leaderboard

@@ -35,11 +35,22 @@ export function StatusHeader() {
       </Link>
 
       {/* Right Side */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4 md:gap-6">
+        {/* Map Link */}
+        <Link
+          href="/map"
+          className="flex items-center gap-2 px-3 md:px-4 py-2 border border-[var(--primary)]/30 rounded-lg bg-[var(--primary)]/5 hover:bg-[var(--primary)]/20 transition-all group"
+        >
+          <span className="text-[var(--primary)] text-lg">🗺️</span>
+          <span className="hidden md:block text-xs font-bold tracking-widest uppercase text-[var(--primary)]">
+            Forensic Map
+          </span>
+        </Link>
+
         {/* Protect My Data / Privacy Vault Button */}
         <button
           onClick={() => (authenticated ? logout() : login())}
-          className="flex items-center gap-3 px-5 py-2.5 border border-[var(--primary)]/30 rounded-lg bg-[var(--background-dark)]/80 hover:bg-[var(--primary)]/10 transition-all group border-l-4 border-l-[var(--primary)]"
+          className="hidden md:flex items-center gap-3 px-5 py-2.5 border border-[var(--primary)]/30 rounded-lg bg-[var(--background-dark)]/80 hover:bg-[var(--primary)]/10 transition-all group border-l-4 border-l-[var(--primary)]"
         >
           <div className="flex flex-col items-start">
             <span className="text-[8px] font-bold uppercase tracking-tighter text-[var(--primary)]/60">
