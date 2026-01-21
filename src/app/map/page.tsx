@@ -103,7 +103,7 @@ export default function MapPage() {
 
       {/* Header UI */}
       <div className="absolute top-0 left-0 right-0 z-50 p-4 md:p-6 flex justify-between items-start">
-        <div className="flex flex-col gap-2 md:gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <div
             onClick={() => router.push("/")}
             className="cursor-pointer relative flex items-center gap-2 md:gap-3 bg-black/95 border border-[var(--primary)]/30 p-2 md:p-4 rounded-full shadow-[0_0_20px_rgba(0,255,255,0.1)]"
@@ -117,6 +117,15 @@ export default function MapPage() {
                 Investigation v3.1
               </p>
             </div>
+          </div>
+          
+          {/* Search Input - Navigates to Home */}
+          <div 
+            onClick={() => router.push("/")}
+            className="cursor-pointer hidden md:flex items-center gap-2 bg-black/80 border border-[var(--primary)]/20 px-4 py-2 rounded-full hover:border-[var(--primary)]/50 transition-colors min-w-[200px]"
+          >
+            <span className="text-[var(--primary)]">🔎</span>
+            <span className="text-sm text-[var(--primary)]/50 font-medium">搜尋餐廳...</span>
           </div>
         </div>
 
