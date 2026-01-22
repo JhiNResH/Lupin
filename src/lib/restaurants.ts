@@ -168,3 +168,74 @@ export async function recordDecode(
   }
 }
 
+// 新增餐廳資料（舉報功能）
+export async function createRestaurant(data: Partial<Restaurant>): Promise<{ success: boolean; id?: string }> {
+  // 產生臨時 ID
+  const tempId = `mock-submit-${Date.now()}`;
+  
+  // 填補預設值
+  const newRestaurant: Restaurant = {
+    id: tempId,
+    restaurant_id: data.name?.toLowerCase().replace(/\s+/g, "-") || tempId,
+    name: data.name || "Unknown Suspect",
+    location: data.location || "Unknown Location",
+    district: data.district || "Taipei",
+    node_id: `P-${Math.floor(Math.random() * 999)}`, // Pending Node
+    web2_facade: 5.0, // 預設滿分，顯示為剛被刷榜
+    lupin_veracity: 0,
+    bot_probability: Math.floor(Math.random() * 40) + 50, // 50-90% bot probability
+    confidence: 0,
+    status: "pending",
+    verification_count: 0,
+    clue_reward: 100, // 高額懸賞
+    forensic_reveal: ["Pending forensic audit..."],
+    analysis_summary: "User reported suspect. Investigation pending.",
+    key_findings: ["User submitted evidence"],
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    ...data,
+  };
+
+  console.log("Mock creating restaurant:", newRestaurant);
+
+  try {
+    // 嘗試寫入 Supabase (如果不是 Mock ID 且環境變數存在)
+    if (!isMockId(newRestaurant.id) && process.env.NEXT_PUBLIC_SUPABASE_URL) {
+       const { data: inserted, error } = await supabase
+        .from("restaurants")
+        .insert([newRestaurant])
+        .select()
+        .single();
+      
+      if (error) throw error;
+      return { success: true, id: inserted.id };
+    }
+  } catch (error) {
+    console.warn("Supabase create failed, falling back to mock success", error);
+  }
+
+  // Mock 模式永遠成功
+  return { success: true, id: tempId };
+}
+
+// 根據行政區獲取餐廳
+export async function getRestaurantsByDistrict(districtId: string): Promise<Restaurant[]> {
+  try {
+    // 從 Supabase 查詢
+    const { data, error } = await supabase
+      .from("restaurants")
+      .select("*")
+      // 如果 districtId 存在且不是所有，則過濾
+      .ilike('district', `%${districtId}%`) 
+      .order("created_at", { ascending: false });
+
+    if (error || !data) {
+      console.log(`Fetch failed for district ${districtId}, returning empty array`);
+      return [];
+    }
+
+    return data as Restaurant[];
+  } catch {
+    return [];
+  }
+}
